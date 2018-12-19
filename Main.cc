@@ -4,10 +4,10 @@
 
 // Include my files
 #include "Nodes.h"
-#include "Left_Riemann.h"
+#include "Riemann.h"
 
 #include "Nodes.cc"
-#include "Left_Riemann.cc"
+#include "Riemann.cc"
 
 // Prototypes
 double F(double x) {
@@ -15,8 +15,12 @@ double F(double x) {
 } // double F(double x) {
 
 int main(void) {
-  double Integral = Numerical::Integration::Left_Riemann(F,0,-3,10000);
+  double Left_Integral  = Numerical::Integration::Riemann::Left (F,-3,0,1000);
+  double Right_Integral = Numerical::Integration::Riemann::Right(F,-3,0,1000);
 
-  printf("Integral = %lf\n", Integral);
+
+  printf("Left Integral  = %lf\n", Left_Integral );
+  printf("Right Integral = %lf\n", Right_Integral);
+
   return 0;
 } // int main() {

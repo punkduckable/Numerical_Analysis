@@ -6,8 +6,7 @@ namespace Nodes {
 
 int Linearly_Spaced(const double a, const double b, const unsigned int n, double *Nodes);
 
-} // namespace Numerical {
 } // namespace Nodes {
-
+} // namespace Numerical {
 
 #endif
