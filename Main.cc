@@ -15,7 +15,7 @@ double F(double x) {
 } // double F(double x) {
 
 int main(void) {
-  double Integral = Numerical::Integration::Left_Riemann(F,-3,0,10000);
+  double Integral = Numerical::Integration::Left_Riemann(F,0,-3,10000);
 
   printf("Integral = %lf\n", Integral);
   return 0;
