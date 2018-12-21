@@ -17,10 +17,13 @@ double F(double x) {
 int main(void) {
   double Left_Integral  = Numerical::Integration::Riemann::Left (F,-3,0,1000);
   double Right_Integral = Numerical::Integration::Riemann::Right(F,-3,0,1000);
+  double Midpoint_Integral = Numerical::Integration::Riemann::Midpoint(F,-3,0,500);
 
 
-  printf("Left Integral  = %lf\n", Left_Integral );
-  printf("Right Integral = %lf\n", Right_Integral);
+  printf("Left Integral     = %lf\n", Left_Integral );
+  printf("Right Integral    = %lf\n", Right_Integral);
+  printf("Midpoint Integral = %lf\n", Midpoint_Integral);
+
 
   return 0;
 } // int main() {
