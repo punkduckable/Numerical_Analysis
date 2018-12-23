@@ -20,41 +20,34 @@ double Numerical::Integration::Riemann::Left(double (*F)(double), const double a
   //////////////////////////////////////////////////////////////////////////////
   // Integration
   // The Left Riemann approximation is,
-  //                                Left Approx = Sum(F(x_i)*h)
-
-  // Calculate h.
-  double h = (b-a)/(double)n;
+  //                                Left Approx = h*Sum(from i = 0 to n-1 of F(x_i))
 
   // Since addition commutes, I can use multiple accumulators to improve runtime.
-  double Integral;
   double Integral0 = 0;
   double Integral1 = 0;
   double Integral2 = 0;
   double Integral3 = 0;
 
-  /* Note, since the node with, h, is the same for every node, we can pull it out
-  of the summation. Therefore,
-                                  Left Approx = h*Sum(F(x_i))
-  This eliminates n-1 multiplications (we only have to do one multiplication
-  rather than one for each step). */
-
   // Main loop
   int i;
-  for(i = 0; i < n - 3; i += 4) {
-    Integral0 += F(x[i]);
+  for(i = 0; i < (int)n - 3; i += 4) {
+    Integral0 += F(x[i+0]);
     Integral1 += F(x[i+1]);
     Integral2 += F(x[i+2]);
     Integral3 += F(x[i+3]);
   } // for(int i = 0; i < (n+1) - 3; i += 4) {
+    printf("1\n");
+
 
   // Clean-up loop
-  for( ; i < n+1; i++)
+  for( ; i < n; i++)
     Integral0 += F(x[i]);
 
   // Combine the multiple accumulators.
-  Integral = Integral0 + Integral1 + Integral2 + Integral3;
+  double Integral = Integral0 + Integral1 + Integral2 + Integral3;
 
-  // Now multiply by h.
+  // Calculate h, multiply through by h.
+  const double h = (b-a)/(double)n;
   Integral *= h;
 
   // Free nodes
@@ -85,29 +78,17 @@ double Numerical::Integration::Riemann::Right(double (*F)(double), const double 
   //////////////////////////////////////////////////////////////////////////////
   // Integration
   // The Right Riemann approximation is,
-  //                                Right Approx = Sum(F(x_i+1)*h)
-
-  // Calculate h.
-  double h = (b-a)/(double)n;
-
+  //                                Right Approx = h*Sum(from i = 0 to n-1 of F(x_i+1))
 
   // Since addition commutes, I can use multiple accumulators to improve runtime.
-  double Integral;
   double Integral0 = 0;
   double Integral1 = 0;
   double Integral2 = 0;
   double Integral3 = 0;
 
-
-  /* Note, since the node with, h, is the same for every node, we can pull it out
-  of the summation. Therefore,
-                                  Right Approx = h*Sum(F(x_i+1))
-  This eliminates n-1 multiplications (we only have to do one multiplication
-  rather than one for each step). */
-
   // Main loopp
   int i;
-  for(i = 0; i < n - 3; i += 4) {
+  for(i = 0; i < (int)n - 3; i += 4) {
     Integral0 += F(x[i+1]);
     Integral1 += F(x[i+2]);
     Integral2 += F(x[i+3]);
@@ -119,9 +100,10 @@ double Numerical::Integration::Riemann::Right(double (*F)(double), const double 
     Integral0 += F(x[i+1]);
 
   // Combine the multiple accumulators
-  Integral = Integral0 + Integral1 + Integral2 + Integral3;
+  double Integral = Integral0 + Integral1 + Integral2 + Integral3;
 
-  // Now multiply through by h
+  // Calculate h, multiply through by h.
+  const double h = (b-a)/(double)n;
   Integral *= h;
 
   // Free the nodes
@@ -151,8 +133,8 @@ double Numerical::Integration::Riemann::Midpoint(double (*F)(double), const doub
 
   //////////////////////////////////////////////////////////////////////////////
   // Integration
-  // The Right Riemann approximation is,
-  //                                Right Approx = h*Sum(F(x_i+1/2))
+  // The Midpoint Riemann approximation is,
+  //                                Midpoint Approx = h*Sum(F(x_i+1/2))
   // where x_i+1/2 is simply (x_i+1 + x_i)/2.
 
   // Now calculate the midpoints
@@ -163,17 +145,10 @@ double Numerical::Integration::Riemann::Midpoint(double (*F)(double), const doub
 
   double Integral = 0;
 
-
-  /* Note, since the node with, h, is the same for every node, we can pull it out
-  of the summation. Therefore,
-                                  Right Approx = h*Sum(F(x_i+1))
-  This eliminates n-1 multiplications (we only have to do one multiplication
-  rather than one for each step). */
-
   // Main loop. Note, this uses the reassociation transformation to attempt and
   // optimize performance.
   int i;
-  for(i = 0; i < n - 3; i += 4)
+  for(i = 0; i < (int)n - 3; i += 4)
     Integral += F(x_midpoint[i]) + (F(x_midpoint[i+1]) + (F(x_midpoint[i+2]) + F(x_midpoint[i+3])));
 
   // Clean up loop.
@@ -181,7 +156,7 @@ double Numerical::Integration::Riemann::Midpoint(double (*F)(double), const doub
     Integral += F(x_midpoint[i]);
 
   // Calculate and multiply by h.
-  double h = (b-a)/(double)n;
+  const double h = (b-a)/(double)n;
   Integral *= h;
 
   // Free x_midpoint, x
