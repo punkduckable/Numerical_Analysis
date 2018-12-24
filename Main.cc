@@ -6,17 +6,36 @@
 #include "Nodes.h"
 #include "Riemann.h"
 #include "Trapezoidal.h"
+#include "Derivative.h"
 
 #include "Nodes.cc"
 #include "Riemann.cc"
 #include "Trapezoidal.cc"
+#include "Derivative.cc"
 
-// Prototypes
-double F(double x) {
+// functions
+double F(const double x) {
   return exp(-x*x);
-} // double F(double x) {
+} // double F(const double x) {
+
+double G(const double x) {
+  return exp(-.01*x*x)*sin(3.8*sqrt(x)) + sin(50*x)*exp(-.03*x*x);
+} // double G(const double x) {
 
 int main(void) {
+  //////////////////////////////////////////////////////////////////////////////
+  // Derivative tests
+  double D_Forward_2pt  = Numerical::Derivative::Forward_2pt(G, 7, .0001);
+  double D_Backward_2pt = Numerical::Derivative::Backward_2pt(G, 7, .0001);
+  double D_Central_3pt  = Numerical::Derivative::Central_2pt(G, 7, .0001);
+
+  printf("Forward difference 2 point  = %lf\n", D_Forward_2pt);
+  printf("Backward difference 2 point = %lf\n", D_Backward_2pt);
+  printf("Central difference 2 point  = %lf\n", D_Central_2pt);
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Integral tests
   double Left_Integral        = Numerical::Integration::Riemann::Left (F,-3,0,1000);
   double Right_Integral       = Numerical::Integration::Riemann::Right(F,-3,0,1000);
   double Midpoint_Integral    = Numerical::Integration::Riemann::Midpoint(F,-3,0,10);

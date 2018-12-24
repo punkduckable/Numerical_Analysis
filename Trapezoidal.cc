@@ -1,3 +1,6 @@
+#if !defined(TRAPEZOIDAL_SOURCE)
+#define TRAPEZOIDAL_SOURCE
+
 double Numerical::Integration::Trapezoidal(double (*F)(double), const double a, const double b, const unsigned int n) {
   //////////////////////////////////////////////////////////////////////////////
   // Nodes
@@ -55,3 +58,5 @@ double Numerical::Integration::Trapezoidal(double (*F)(double), const double a, 
   // All done.
   return Integral;
 } // double Numerical::Integration::Trapezoidal(double (*F)(double), const double a, const double b, const unsigned int n) {
+
+#endif
