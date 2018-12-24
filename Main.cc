@@ -27,15 +27,26 @@ int main(void) {
   // Derivative tests
   double D_Forward_2pt  = Numerical::Derivative::Forward_2pt(G, 7, .0001);
   double D_Backward_2pt = Numerical::Derivative::Backward_2pt(G, 7, .0001);
+
   double D_Central_3pt  = Numerical::Derivative::Central_3pt(G, 7, .0001);
   double D_Forward_3pt  = Numerical::Derivative::Forward_3pt(G, 7, .0001);
   double D_Backward_3pt = Numerical::Derivative::Backward_3pt(G, 7, .0001);
 
+  double D_Central_5pt  = Numerical::Derivative::Central_5pt(G, 7, .0001);
+  double D_Forward_5pt  = Numerical::Derivative::Forward_5pt(G, 7, .0001);
+  double D_Backward_5pt = Numerical::Derivative::Backward_5pt(G, 7, .0001);
+
+
   printf("Forward difference 2 point  = %lf\n", D_Forward_2pt);
-  printf("Backward difference 2 point = %lf\n", D_Backward_2pt);
+  printf("Backward difference 2 point = %lf\n\n", D_Backward_2pt);
+
   printf("Central difference 3 point  = %lf\n", D_Central_3pt);
   printf("Forward difference 3 point  = %lf\n", D_Forward_3pt);
-  printf("Backward difference 3 point = %lf\n", D_Backward_3pt);
+  printf("Backward difference 3 point = %lf\n\n", D_Backward_3pt);
+
+  printf("Central difference 5 point  = %lf\n", D_Central_5pt);
+  printf("Forward difference 5 point  = %lf\n", D_Forward_5pt);
+  printf("Backward difference 5 point = %lf\n", D_Backward_5pt);
 
 
   //////////////////////////////////////////////////////////////////////////////
